@@ -38,6 +38,7 @@ private:
     bool _stepAdaptation;
     bool _continueFromPrevious;
     double _bedRadiusMM;
+    double _thrLimit;
     double _centreOffsetX;
     double _centreOffsetY;
 

@@ -25,6 +25,7 @@ EvaluatorThetaRhoLine::EvaluatorThetaRhoLine(WorkManager& workManager) :
     _prevTheta = 0;
     _prevRho = 0;
     _bedRadiusMM = 0;
+    _thrLimit = 1;
     _centreOffsetX = 0;
     _centreOffsetY = 0;
     _isInterpolating = false;
@@ -41,6 +42,7 @@ void EvaluatorThetaRhoLine::setConfig(const char *configStr, const char* robotAt
     double sizeY = RdJson::getDouble("sizeY", 0, robotAttributes);
     double originX = RdJson::getDouble("originX", 0, robotAttributes);
     double originY = RdJson::getDouble("originY", 0, robotAttributes);
+    _thrLimit = RdJson::getDouble("thrLimit", 0, robotAttributes);
     _bedRadiusMM = std::min(sizeX, sizeY) / 2;
     _centreOffsetX = sizeX / 2 - originX;
     _centreOffsetY = sizeY / 2 - originY;
@@ -228,6 +230,6 @@ void EvaluatorThetaRhoLine::stop()
 
 void EvaluatorThetaRhoLine::calcXYPos(double theta, double rho, double& x, double& y)
 {
-    x = sin(theta) * rho * _bedRadiusMM + _centreOffsetX;
-    y = cos(theta) * rho * _bedRadiusMM + _centreOffsetY;
+    x = sin(theta) * rho * _bedRadiusMM * _thrLimit + _centreOffsetX;
+    y = cos(theta) * rho * _bedRadiusMM * _thrLimit + _centreOffsetY;
 }

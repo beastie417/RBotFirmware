@@ -14,6 +14,7 @@ class AxisParams
     static constexpr float unitsPerRot_default = 1.0f;
     static constexpr float maxRPM_default = 300.0f;
     static constexpr float homeOffsetVal_default = 0.0f;
+    static constexpr float thrLimit_default =  1.0f;
     static constexpr long homeOffSteps_default = 0;
     static constexpr float minSpeedMMps_default = 0.0f;
     static constexpr uint32_t stepsForAxisHoming_default = 100000;
@@ -31,6 +32,7 @@ class AxisParams
     float _maxVal;
     bool _isPrimaryAxis;
     bool _isDominantAxis;
+    float _thrLimit;
     // A servo axis is one which does not require blockwise stepping to a destination
     bool _isServoAxis;
     float _homeOffsetVal;
@@ -59,6 +61,7 @@ class AxisParams
         _isServoAxis = false;
         _homeOffsetVal = homeOffsetVal_default;
         _homeOffSteps = homeOffSteps_default;
+        _thrLimit = thrLimit_default;
     }
 
     float stepsPerUnit()
@@ -101,6 +104,7 @@ class AxisParams
         _isServoAxis = RdJson::getLong("isServoAxis", 0, axisJSON) != 0;
         _homeOffsetVal = float(RdJson::getDouble("homeOffsetVal", 0, axisJSON));
         _homeOffSteps = RdJson::getLong("homeOffSteps", 0, axisJSON);
+        _thrLimit = float(RdJson::getDouble("thrLimit", AxisParams::thrLimit_default, axisJSON));
     }
 
     void debugLog(int axisIdx)
