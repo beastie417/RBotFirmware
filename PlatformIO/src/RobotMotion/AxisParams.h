@@ -111,7 +111,7 @@ class AxisParams
     {
         Log.notice("Axis%d params maxSpeed %F, acceleration %F, stepsPerRot %F, unitsPerRot %F, maxRPM %F\n",
                    axisIdx, _maxSpeedMMps, _maxAccelMMps2, _stepsPerRot, _unitsPerRot, _maxRPM);
-        Log.notice("Axis%d params minVal %F (%d), maxVal %F (%d), isDominant %d, isServo %d, homeOffVal %F, homeOffSteps %d\n",
-                   axisIdx, _minVal, _minValValid, _maxVal, _maxValValid, _isDominantAxis, _isServoAxis, _homeOffsetVal, _homeOffSteps);
+        Log.notice("Axis%d params minVal %F (%d), maxVal %F (%d), isDominant %d, isServo %d, homeOffVal %F, homeOffSteps %d, thrLimit %f\n",
+                   axisIdx, _minVal, _minValValid, _maxVal, _maxValValid, _isDominantAxis, _isServoAxis, _homeOffsetVal, _homeOffSteps, _thrLimit);
     }
 };

@@ -63,6 +63,13 @@ class AxesParams
         return _axisParams[axisIdx]._homeOffSteps;
     }
 
+    float getthrLimit(int axisIdx)
+    {
+        if (axisIdx < 0 || axisIdx >= RobotConsts::MAX_AXES)
+            return 0;
+        return _axisParams[axisIdx]._thrLimit;
+    }
+
     void sethomeOffSteps(int axisIdx, long newVal)
     {
         if (axisIdx < 0 || axisIdx >= RobotConsts::MAX_AXES)

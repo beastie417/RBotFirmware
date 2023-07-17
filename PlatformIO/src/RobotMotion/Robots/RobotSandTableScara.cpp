@@ -276,19 +276,26 @@ void RobotSandTableScara::setRobotAttributes(AxesParams& axesParams, String& rob
 	// The maxVal for axis0 and axis1 are used to determine the arm lengths
 	// The radius of the machine is the sum of these two lengths
 	float shoulderElbowMM = 0, elbowHandMM = 0;
+    float thrLimit = 0;
 	bool axis0MaxValid = axesParams.getMaxVal(0, shoulderElbowMM);
 	bool axis1MaxValid = axesParams.getMaxVal(1, elbowHandMM);
+    float thr0Limit = axesParams.getthrLimit(0);
+    float thr1Limit = axesParams.getthrLimit(1);
     // If not valid set to some values to avoid arithmetic errors
 	if (!axis0MaxValid)
 		shoulderElbowMM = 100;
 	if (!axis1MaxValid)
 		elbowHandMM = 100;
+    if (thr0Limit == 0 || thr1Limit == 0)
+		thrLimit = 1;
+    else
+        thrLimit = std::min(thr0Limit, thr1Limit);
 
     // Set attributes
     constexpr int MAX_ATTR_STR_LEN = 400;
     char attrStr[MAX_ATTR_STR_LEN];
-    sprintf(attrStr, "{\"sizeX\":%0.2f,\"sizeY\":%0.2f,\"sizeZ\":%0.2f,\"originX\":%0.2f,\"originY\":%0.2f,\"originZ\":%0.2f}",
+    sprintf(attrStr, "{\"sizeX\":%0.2f,\"sizeY\":%0.2f,\"sizeZ\":%0.2f,\"originX\":%0.2f,\"originY\":%0.2f,\"originZ\":%0.2f,\"thrLimit\":%0.2f}",
             (shoulderElbowMM+elbowHandMM)*2, (shoulderElbowMM+elbowHandMM)*2, 0.0,
-            (shoulderElbowMM+elbowHandMM), (shoulderElbowMM+elbowHandMM), 0.0);
+            (shoulderElbowMM+elbowHandMM), (shoulderElbowMM+elbowHandMM), 0.0, thrLimit);
     robotAttributes = attrStr;
 }
